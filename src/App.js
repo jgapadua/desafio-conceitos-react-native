@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import Icon from 'react-native-vector-icons/AntDesign';
+
 import {
   SafeAreaView,
   View,
@@ -46,6 +48,14 @@ export default function App() {
 
     setRepositories(updatedRepositories);
   }
+  
+  async function handleRemoveRepository(id) {
+    await api.delete(`repositories/${id}`);
+
+    setRepositories(repositories.filter(
+      repository => repository.id != id 
+    ))
+  }
 
   return (
     <>
@@ -56,6 +66,13 @@ export default function App() {
           keyExtractor={(repository) => repository.id}
           renderItem={({ item: { id, title, techs, likes } }) => (
             <View style={styles.repositoryContainer}>
+              <TouchableOpacity
+                style={styles.buttondel}
+                onPress={() => handleRemoveRepository(id)}
+              >
+                <Text style={styles.buttonaddText}>Excluir</Text>
+              </TouchableOpacity>
+              
               <Text style={styles.repository}>{title}</Text>
 
               <View style={styles.techsContainer}>
@@ -79,6 +96,8 @@ export default function App() {
               >
                 <Text style={styles.buttonText}>Curtir</Text>
               </TouchableOpacity>
+
+              
             </View>
           )}
         />
@@ -155,5 +174,15 @@ const styles = StyleSheet.create({
   buttonaddText:{
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  buttondel: {
+    margin:5,
+    borderColor:'#000',
+    alignItems:'center',
+    justifyContent:'center',
+    width:60,
+    height:50,
+    backgroundColor:'#ff0000',
+    borderRadius:50
   },
 });
