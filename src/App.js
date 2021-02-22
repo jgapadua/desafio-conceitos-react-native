@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Icon from 'react-native-vector-icons/AntDesign';
-
 import {
   SafeAreaView,
   View,
@@ -18,14 +16,14 @@ export default function App() {
   const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
-    api.get("repositories").then((response) => setRepositories(response.data));
+    api.get('repositories').then((response) => setRepositories(response.data));
   }, []);
 
   async function handleAddRepository(){
     const response = await api.post('repositories',{
       title: `Novo repositório ${Date.now()}`,
       url: `https://github.com/jgapadua/${Date.now()}`,
-      techs: ["ReactJS"] 
+      techs: ["ReactJS", 'Node.js'] 
   });
  
   const repository = response.data;
@@ -57,6 +55,25 @@ export default function App() {
     ))
   }
 
+  async function handleUpdateRepository(id) {
+    const response = await api.put(`repositories/${id}`,{
+      title: `Novo repositório ${Date.now()}`,
+      url: `https://github.com/jgapadua/${Date.now()}`,
+      techs: ["ReactJS", "React Native"] 
+  });
+  const updatedRepository = response.data;
+
+  const repositoryIndex = repositories.findIndex(
+    (repository) => repository.id === id
+  );
+
+  const updatedRepositories = [...repositories];
+
+  updatedRepositories[repositoryIndex] = updatedRepository;
+
+  setRepositories(updatedRepositories);
+}
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
@@ -72,7 +89,14 @@ export default function App() {
               >
                 <Text style={styles.buttonaddText}>Excluir</Text>
               </TouchableOpacity>
-              
+
+              <TouchableOpacity
+                style={styles.buttonupd}
+                onPress={() => handleUpdateRepository(id)}
+              >
+                <Text style={styles.buttonaddText}>Alterar</Text>
+              </TouchableOpacity>
+
               <Text style={styles.repository}>{title}</Text>
 
               <View style={styles.techsContainer}>
@@ -184,5 +208,15 @@ const styles = StyleSheet.create({
     height:50,
     backgroundColor:'#ff0000',
     borderRadius:50
+  },
+  buttonupd: {
+    margin:5,
+    borderColor:'#000',
+    alignItems:'center',
+    justifyContent:'center',
+    width:60,
+    height:50,
+    backgroundColor:'#808080',
+    borderRadius:50,
   },
 });
