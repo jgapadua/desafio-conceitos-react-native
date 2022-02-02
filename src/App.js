@@ -83,21 +83,22 @@ export default function App() {
           keyExtractor={(repository) => repository.id}
           renderItem={({ item: { id, title, techs, likes } }) => (
             <View style={styles.repositoryContainer}>
+              <Text style={styles.repository}>{title}</Text>
               <TouchableOpacity
                 style={styles.buttondel}
                 onPress={() => handleRemoveRepository(id)}
               >
-                <Text style={styles.buttonaddText}>Excluir</Text>
+                <Text style={styles.buttondelText}>Excluir</Text>
               </TouchableOpacity>
-
+              
               <TouchableOpacity
                 style={styles.buttonupd}
                 onPress={() => handleUpdateRepository(id)}
               >
-                <Text style={styles.buttonaddText}>Alterar</Text>
+                <Text style={styles.buttonupdText}>Alterar</Text>
               </TouchableOpacity>
 
-              <Text style={styles.repository}>{title}</Text>
+              
 
               <View style={styles.techsContainer}>
                 {techs.map((tech) => (
@@ -114,11 +115,11 @@ export default function App() {
               </View>
 
               <TouchableOpacity
-                style={styles.button}
+                style={styles.buttonlike}
                 onPress={() => handleLikeRepository(id)}
                 testID={`like-button-${id}`}
               >
-                <Text style={styles.buttonText}>Curtir</Text>
+                <Text style={styles.buttonlikeText}>Curtir</Text>
               </TouchableOpacity>
 
               
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#7159c1",
   },
+  
   repositoryContainer: {
     marginBottom: 15,
     marginHorizontal: 15,
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
   },
+
   techsContainer: {
     flexDirection: "row",
     marginTop: 10,
@@ -165,6 +168,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     color: "#fff",
   },
+
   likesContainer: {
     marginTop: 15,
     flexDirection: "row",
@@ -175,10 +179,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginRight: 10,
   },
-  button: {
+
+  buttonlike: {
     marginTop: 10,
   },
-  buttonText: {
+  buttonlikeText: {
     fontSize: 14,
     fontWeight: "bold",
     marginRight: 10,
@@ -186,6 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#7159c1",
     padding: 15,
   },
+
   buttonadd:{
     backgroundColor: '#FFF',
     margin: 20,
@@ -194,11 +200,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
   buttonaddText:{
     fontWeight: 'bold',
     fontSize: 16,
   },
+
   buttondel: {
     margin:5,
     borderColor:'#000',
@@ -206,9 +212,14 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     width:60,
     height:50,
-    backgroundColor:'#ff0000',
+    backgroundColor:'#ca4949',
     borderRadius:50
   },
+  buttondelText:{
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
   buttonupd: {
     margin:5,
     borderColor:'#000',
@@ -218,5 +229,9 @@ const styles = StyleSheet.create({
     height:50,
     backgroundColor:'#808080',
     borderRadius:50,
+  },
+  buttonupdText:{
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
